@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>润柏贸易有限公司 | RUNBAI Global — 液压油缸 · 铝合金船舶 · 储能电源</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy:  { 950:'#060d18', 900:'#0b1528', 800:'#0f1f3d', 700:'#132952', 600:'#183463' },
+                        brand: '#2563eb',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root { --brand: #2563eb; --navy-900: #0b1528; }
+        html { scroll-behavior: smooth; }
+        body { overflow-x: hidden; background: #fff; }
+        ::selection { background: #2563eb; color: #fff; }
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+
+        /* ===== 导航毛玻璃 ===== */
+        .nav-glass {
+            background: rgba(255,255,255,0.72);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+        }
+
+        /* ===== Hero 视差区 ===== */
+        .hero-bg {
+            background: radial-gradient(ellipse 80% 60% at 50% 30%, #1a3a5c 0%, #0b1528 60%, #060d18 100%);
+            position: relative; overflow: hidden;
+        }
+        .hero-bg::before {
+            content: ''; position: absolute; inset: 0;
+            background-image:
+                radial-gradient(2px 2px at 20% 30%, rgba(255,255,255,0.15), transparent),
+                radial-gradient(2px 2px at 40% 70%, rgba(255,255,255,0.1), transparent),
+                radial-gradient(1px 1px at 60% 20%, rgba(255,255,255,0.12), transparent),
+                radial-gradient(1px 1px at 80% 60%, rgba(255,255,255,0.08), transparent),
+                radial-gradient(2px 2px at 10% 80%, rgba(255,255,255,0.1), transparent),
+                radial-gradient(1px 1px at 70% 40%, rgba(255,255,255,0.06), transparent);
+            animation: starDrift 30s linear infinite;
+        }
+        @keyframes starDrift {
+            0% { transform: translate(0,0) scale(1); }
+            33% { transform: translate(15px,-10px) scale(1.05); }
+            66% { transform: translate(-10px,8px) scale(0.97); }
+            100% { transform: translate(0,0) scale(1); }
+        }
+
+        /* ===== 底部光晕呼吸 ===== */
+        .glow-breathe {
+            animation: breathe 4s ease-in-out infinite;
+        }
+        @keyframes breathe {
+            0%,100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.08); }
+        }
+
+        /* ===== 卡片悬浮 ===== */
+        .card-lift {
+            transition: transform 0.55s cubic-bezier(0.25,0.1,0.25,1),
+                        box-shadow 0.55s cubic-bezier(0.25,0.1,0.25,1);
+        }
+        .card-lift:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 24px 48px -8px rgba(0,0,0,0.1), 0 0 0 1px rgba(37,99,235,0.08);
+        }
+
+        /* ===== 卡片 3D 倾斜 ===== */
+        .tilt-card { transition: transform 0.15s ease-out; transform-style: preserve-3d; perspective: 1000px; }
+        .tilt-card .tilt-inner { transition: transform 0.15s ease-out; }
+
+        /* ===== 卡片微浮动（静止时） ===== */
+        @keyframes subtleFloat {
+            0%,100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+        .float-card { animation: subtleFloat 5s ease-in-out infinite; }
+        .float-card:nth-child(2) { animation-delay: 0.8s; }
+        .float-card:nth-child(3) { animation-delay: 1.6s; }
+
+        /* ===== 滚动渐显 ===== */
+        .reveal {
+            opacity: 0; transform: translateY(36px);
+            transition: opacity 0.8s cubic-bezier(0.25,0.1,0.25,1),
+                        transform 0.8s cubic-bezier(0.25,0.1,0.25,1);
+        }
+        .reveal.in-view { opacity: 1; transform: translateY(0); }
+
+        /* ===== 按钮微光脉冲 ===== */
+        .btn-glow {
+            position: relative; overflow: hidden;
+        }
+        .btn-glow::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            transform: translateX(-100%);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+        @keyframes shimmer {
+            0%,100% { transform: translateX(-100%); }
+            50% { transform: translateX(100%); }
+        }
+
+        /* ===== 语言切换 ===== */
+        .lang-dot {
+            transition: all 0.3s cubic-bezier(0.175,0.885,0.32,1.275);
+        }
+        .lang-dot.active { background: #2563eb; color: #fff; box-shadow: 0 2px 8px rgba(37,99,235,0.35); }
+
+        /* ===== 移动菜单 ===== */
+        .mobile-drawer {
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+        }
+        .mobile-drawer.open { transform: translateX(0); }
+
+        /* ===== 表单输入 ===== */
+        .input-focus:focus {
+            outline: none; border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37,99,235,0.08), 0 1px 2px rgba(0,0,0,0.04);
+        }
+
+        /* ===== 响应式 ===== */
+        @media (max-width: 768px) {
+            .hero-bg { min-height: 90vh; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ==================== 导航 ==================== -->
+<header id="navbar" class="fixed top-0 left-0 right-0 z-50 nav-glass transition-all duration-500">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
+        <div class="flex items-center justify-between h-16">
+            <a href="#" class="flex items-center gap-2 flex-shrink-0 group">
+                <span class="text-lg sm:text-xl font-bold text-navy-900 tracking-tight transition-colors group-hover:text-brand">
+                    RUNBAI<span class="text-brand"> Global</span>
+                </span>
+            </a>
+            <nav class="hidden lg:flex items-center gap-1">
+                <a href="#home"     class="px-3.5 py-2 text-[13px] font-medium text-slate-600 hover:text-navy-900 rounded-lg hover:bg-slate-100 transition-all duration-200" data-i18n="nav.home">首页</a>
+                <a href="#products" class="px-3.5 py-2 text-[13px] font-medium text-slate-600 hover:text-navy-900 rounded-lg hover:bg-slate-100 transition-all duration-200" data-i18n="nav.products">产品中心</a>
+                <a href="#about"    class="px-3.5 py-2 text-[13px] font-medium text-slate-600 hover:text-navy-900 rounded-lg hover:bg-slate-100 transition-all duration-200" data-i18n="nav.about">关于我们</a>
+                <a href="#contact"  class="px-3.5 py-2 text-[13px] font-medium text-slate-600 hover:text-navy-900 rounded-lg hover:bg-slate-100 transition-all duration-200" data-i18n="nav.contact">联系我们</a>
+            </nav>
+            <div class="flex items-center gap-2 sm:gap-3">
+                <div class="hidden sm:flex items-center gap-1 bg-slate-100/80 rounded-full p-0.5">
+                    <button class="lang-dot active w-9 h-7 text-[11px] font-semibold rounded-full flex items-center justify-center" data-lang="zh">中</button>
+                    <button class="lang-dot w-9 h-7 text-[11px] font-semibold rounded-full flex items-center justify-center" data-lang="en">EN</button>
+                    <button class="lang-dot w-9 h-7 text-[11px] font-semibold rounded-full flex items-center justify-center" data-lang="ru">RU</button>
+                </div>
+                <a href="https://wa.me/8613061124006" target="_blank" rel="noopener"
+                   class="hidden sm:flex items-center gap-1.5 bg-green-500 hover:bg-green-600 text-white text-xs font-medium px-3.5 py-2 rounded-full transition-all duration-200 hover:shadow-lg hover:shadow-green-500/25">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    WhatsApp
+                </a>
+                <button id="menuBtn" class="lg:hidden p-2 -mr-1 rounded-lg hover:bg-slate-100 transition-colors" aria-label="菜单">
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- ==================== 移动菜单 ==================== -->
+<div id="mobileDrawer" class="mobile-drawer fixed inset-0 z-40 bg-white/95 backdrop-blur-xl lg:hidden flex flex-col pt-20 px-6">
+    <nav class="flex flex-col gap-1">
+        <a href="#home"     class="block px-4 py-3.5 text-xl font-medium rounded-xl hover:bg-slate-100 transition-colors" data-i18n="nav.home"    onclick="closeDrawer()">首页</a>
+        <a href="#products" class="block px-4 py-3.5 text-xl font-medium rounded-xl hover:bg-slate-100 transition-colors" data-i18n="nav.products" onclick="closeDrawer()">产品中心</a>
+        <a href="#about"    class="block px-4 py-3.5 text-xl font-medium rounded-xl hover:bg-slate-100 transition-colors" data-i18n="nav.about"    onclick="closeDrawer()">关于我们</a>
+        <a href="#contact"  class="block px-4 py-3.5 text-xl font-medium rounded-xl hover:bg-slate-100 transition-colors" data-i18n="nav.contact"  onclick="closeDrawer()">联系我们</a>
+    </nav>
+    <div class="mt-8 flex items-center gap-2">
+        <span class="text-xs text-slate-400 mr-1">语言:</span>
+        <button class="lang-dot active w-10 h-8 text-xs font-semibold rounded-full flex items-center justify-center bg-slate-100" data-lang="zh">中</button>
+        <button class="lang-dot w-10 h-8 text-xs font-semibold rounded-full flex items-center justify-center bg-slate-100" data-lang="en">EN</button>
+        <button class="lang-dot w-10 h-8 text-xs font-semibold rounded-full flex items-center justify-center bg-slate-100" data-lang="ru">RU</button>
+    </div>
+    <a href="https://wa.me/8613061124006" target="_blank" rel="noopener"
+       class="mt-6 flex items-center justify-center gap-2 px-4 py-3.5 bg-green-500 text-white font-semibold rounded-xl">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/></svg>
+        WhatsApp
+    </a>
+</div>
+
+<!-- ==================== Hero ==================== -->
+<section id="home" class="hero-bg min-h-screen flex items-center justify-center text-white pt-16" id="heroSection">
+    <div class="relative z-10 text-center px-5 max-w-4xl mx-auto py-20">
+        <!-- ★ 主标语：润+柏 主题色 -->
+        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-bold leading-[1.15] mb-5 reveal tracking-tight" id="heroMain">
+            <span class="text-brand">润</span>行天下
+            <span class="text-brand">柏</span>遍全球
+        </h1>
+        <!-- ★ 副标题 -->
+        <p class="text-base sm:text-lg text-slate-300/80 mb-4 reveal font-medium" id="heroSub">
+            润柏贸易有限公司
+        </p>
+        <p class="text-slate-400/60 text-sm sm:text-base max-w-xl mx-auto mb-10 leading-relaxed reveal" data-i18n="hero.desc">
+            液压油缸 · 铝合金船舶 · 储能电源 — 中国制造，服务全球
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 reveal">
+            <a href="#products" class="btn-glow px-8 py-3.5 bg-white hover:bg-slate-100 text-navy-900 font-semibold text-sm rounded-full transition-all duration-300 hover:shadow-xl hover:scale-105 active:scale-95">
+                <span data-i18n="hero.cta1">探索产品</span>
+            </a>
+            <a href="#contact" class="px-8 py-3.5 border border-white/25 hover:border-white/50 text-white font-semibold text-sm rounded-full transition-all duration-300 hover:bg-white/5 active:scale-95">
+                <span data-i18n="hero.cta2">立即询盘</span>
+            </a>
+        </div>
+    </div>
+    <!-- 底部呼吸光晕 -->
+    <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[120px] bg-brand/10 blur-[80px] rounded-full glow-breathe pointer-events-none"></div>
+    <!-- 向下滚动 -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40 hover:opacity-70 transition-opacity cursor-pointer" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">
+        <span class="text-[10px] text-slate-400 uppercase tracking-widest">Scroll</span>
+        <svg class="w-4 h-4 text-slate-400 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+    </div>
+</section>
+
+<!-- ==================== 产品展示 ==================== -->
+<section id="products" class="py-24 sm:py-32 bg-white">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
+        <div class="text-center mb-16 sm:mb-20 reveal">
+            <p class="text-brand font-semibold text-xs tracking-[0.2em] uppercase mb-4" data-i18n="products.tag">核心产品线</p>
+            <h2 class="text-3xl sm:text-5xl font-bold text-navy-900 tracking-tight" data-i18n="products.heading">三大核心支柱</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
+            <!-- ★ 产品1: 液压油缸 -->
+            <div class="card-lift float-card bg-white rounded-2xl border border-slate-100 overflow-hidden reveal group cursor-pointer tilt-card" data-tilt>
+                <div class="tilt-inner">
+                <div class="h-60 bg-gradient-to-br from-slate-100 via-slate-50 to-white flex items-center justify-center relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-t from-white/90 via-transparent to-transparent z-10"></div>
+                    <svg class="w-20 h-20 text-slate-200 relative z-0" fill="none" viewBox="0 0 80 80" stroke="currentColor" stroke-width="0.8"><rect x="15" y="20" width="50" height="40" rx="5"/><line x1="25" y1="10" x2="25" y2="20"/><line x1="55" y1="10" x2="55" y2="20"/><rect x="28" y="60" width="24" height="8" rx="2"/></svg>
+                    <span class="absolute bottom-4 z-20 text-[11px] text-slate-300"><!-- ★ 替换图片: <img src="7.jpg" class="absolute inset-0 w-full h-full object-cover z-0"> --><img src="7.jpg"></span>
+                </div>
+                <div class="p-6 sm:p-7">
+                    <div class="inline-block bg-brand/5 text-brand text-[11px] font-semibold px-3 py-1 rounded-full mb-4">Hydraulic</div>
+                    <h3 class="text-xl font-bold text-navy-900 mb-3" data-i18n="prod1.name">液压油缸</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed mb-5" data-i18n="prod1.desc">定制化单/双作用液压油缸。缸径40–400mm，最大行程8000mm，工作压力可达350bar。活塞杆硬铬镀层处理，表面硬度HRC58–62。密封系统选用国际品牌。支持ISO 6020/2、DIN 24333等多种安装标准。</p>
+                    <ul class="space-y-1.5 text-[12px] text-slate-400 mb-6">
+                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-brand rounded-full"></span> 工作压力 ≤350 bar</li>
+                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-brand rounded-full"></span> ISO 9001:2015 认证</li>
+                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-brand rounded-full"></span> 2年质保</li>
+                    </ul>
+                    <a href="#contact" class="inline-flex items-center gap-2 text-brand font-semibold text-sm group/link">
+                        <span data-i18n="products.inquiry">索取报价</span>
+                        <svg class="w-3.5 h-3.5 transition-transform group-hover/link:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    </a>
+                </div>
+                </div>
+            </div>
+
+            <!-- ★ 产品2: 铝合金船舶 -->
+            <div class="card-lift float-card bg-white rounded-2xl border border-slate-100 overflow-hidden reveal group cursor-pointer tilt-card" data-tilt style="animation-delay:0.8s">
+                <div class="tilt-inner">
+                <div class="h-60 bg-gradient-to-br from-slate-100 via-slate-50 to-white flex items-center justify-center relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-t from-white/90 via-transparent to-transparent z-10"></div>
+                    <svg class="w-20 h-20 text-slate-200 relative z-0" fill="none" viewBox="0 0 80 80" stroke="currentColor" stroke-width="0.8"><path d="M10 50l10-28h40l10 28H10z"/><rect x="22" y="50" width="10" height="14"/><rect x="48" y="50" width="10" height="14"/><line x1="40" y1="22" x2="40" y2="64"/></svg>
+                    <span class="absolute bottom-4 z-20 text-[11px] text-slate-300"><!-- ★ 替换图片: <img src="9.jpg" class="absolute inset-0 w-full h-full object-cover z-0"> --><img src="9.jpg"></span>
+                </div>
+                <div class="p-6 sm:p-7">
+                    <div class="inline-block bg-brand/5 text-brand text-[11px] font-semibold px-3 py-1 rounded-full mb-4">Marine</div>
+                    <h3 class="text-xl font-bold text-navy-900 mb-3" data-i18n="prod2.name">铝合金船舶</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed mb-5" data-i18n="prod2.desc">专注80米以内铝合金船舶制造。涵盖执法巡逻艇、休闲钓鱼艇、多用途工作艇三大系列。船体采用5083-H116/H321船用级铝合金，深V船体设计确保高速稳定性。全焊接结构通过BV/CCS船级社认证。支持定制舱室布局及动力配置。</p>
+                    <ul class="space-y-1.5 text-[12px] text-slate-400 mb-6">
+                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-brand rounded-full"></span> 长度 ≤80m，5083铝合金</li>
+                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-brand rounded-full"></span> 航速 25–55 节</li>
+                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-brand rounded-full"></span> BV / CCS 船级社认证</li>
+                    </ul>
+                    <a href="#contact" class="inline-flex items-center gap-2 text-brand font-semibold text-sm group/link">
+                        <span data-i18n="products.inquiry">索取报价</span>
+                        <svg class="w-3.5 h-3.5 transition-transform group-hover/link:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    </a>
+                </div>
+                </div>
+            </div>
+
+            <!-- ★ 产品3: 储能电源 -->
+            <div class="card-lift float-card bg-white rounded-2xl border border-slate-100 overflow-hidden reveal group cursor-pointer tilt-card" data-tilt style="animation-delay:1.6s">
+                <div class="tilt-inner">
+                <div class="h-60 bg-gradient-to-br from-slate-100 via-slate-50 to-white flex items-center justify-center relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-t from-white/90 via-transparent to-transparent z-10"></div>
+                    <svg class="w-20 h-20 text-slate-200 relative z-0" fill="none" viewBox="0 0 80 80" stroke="currentColor" stroke-width="0.8"><rect x="24" y="16" width="32" height="48" rx="4"/><line x1="34" y1="32" x2="46" y2="32"/><line x1="34" y1="40" x2="46" y2="40"/><line x1="34" y1="48" x2="42" y2="48"/></svg>
+                    <span class="absolute bottom-4 z-20 text-[11px] text-slate-300"><img src="8.jpg" class="absolute inset-0 w-full h-full object-cover z-0"> --><img src="8.jpg"></span>
+                </div>
+                <div class="p-6 sm:p-7">
+                    <div class="inline-block bg-brand/5 text-brand text-[11px] font-semibold px-3 py-1 rounded-full mb-4">Energy</div>
+                    <h3 class="text-xl font-bold text-navy-900 mb-3" data-i18n="prod3.name">储能电源系统</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed mb-5" data-i18n="prod3.desc">模块化磷酸铁锂(LiFePO4)储能系统。容量5kWh至1MWh+，支持多机并联扩展。内置智能BMS，实现单体电压/温度实时监控与SOC/SOH精准估算。可选液冷/风冷热管理方案。通过IEC 62619、UN38.3、CE等国际认证。</p>
+                    <ul class="space-y-1.5 text-[12px] text-slate-400 mb-6">
+                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-brand rounded-full"></span> 循环寿命 6000+ 次 (80% DoD)</li>
+                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-brand rounded-full"></span> CE / IEC 62619 / UN38.3</li>
+                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-brand rounded-full"></span> IP54 防护 · 远程监控</li>
+                    </ul>
+                    <a href="#contact" class="inline-flex items-center gap-2 text-brand font-semibold text-sm group/link">
+                        <span data-i18n="products.inquiry">索取报价</span>
+                        <svg class="w-3.5 h-3.5 transition-transform group-hover/link:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    </a>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== 业绩统计 ==================== -->
+<section class="py-24 sm:py-32 bg-navy-900 text-white relative overflow-hidden">
+    <div class="absolute inset-0 opacity-[0.04]" style="background-image: radial-gradient(circle, #fff 1px, transparent 1px); background-size: 36px 36px;"></div>
+    <div class="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
+        <div class="text-center mb-16 reveal">
+            <p class="text-blue-300/70 font-semibold text-xs tracking-[0.2em] uppercase mb-4" data-i18n="stats.tag">业绩记录</p>
+            <h2 class="text-3xl sm:text-5xl font-bold tracking-tight" data-i18n="stats.heading">自2015年起 持续交付</h2>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
+            <div class="reveal"><div class="stat-num text-5xl sm:text-6xl font-bold text-white mb-2" data-target="10">0</div><p class="text-slate-400 text-sm" data-i18n="stats.years">年行业经验</p></div>
+            <div class="reveal"><div class="stat-num text-5xl sm:text-6xl font-bold text-white mb-2" data-target="40">0</div><p class="text-slate-400 text-sm" data-i18n="stats.countries">服务国家/地区</p></div>
+            <div class="reveal"><div class="stat-num text-5xl sm:text-6xl font-bold text-white mb-2" data-target="800">0</div><p class="text-slate-400 text-sm" data-i18n="stats.orders">订单交付</p></div>
+            <div class="reveal"><div class="stat-num text-5xl sm:text-6xl font-bold text-white mb-2" data-target="99">0</div><p class="text-slate-400 text-sm" data-i18n="stats.satisfaction">% 客户满意度</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== 历史订单 ==================== -->
+<section id="about" class="py-24 sm:py-32 bg-white">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
+        <div class="text-center mb-16 sm:mb-20 reveal">
+            <p class="text-brand font-semibold text-xs tracking-[0.2em] uppercase mb-4" data-i18n="orders.tag">精选项目</p>
+            <h2 class="text-3xl sm:text-5xl font-bold text-navy-900 tracking-tight" data-i18n="orders.heading">全球订单时间线</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+            <!-- ★ 订单1 -->
+            <div class="card-lift bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 flex gap-5 reveal">
+                <div class="w-12 h-12 bg-navy-900 rounded-xl flex items-center justify-center flex-shrink-0 text-white font-bold text-sm">01</div>
+                <div>
+                    <span class="text-[11px] text-slate-400 font-semibold tracking-wide">2024.03.12 – 2024.06.28</span>
+                    <h4 class="text-lg font-bold text-navy-900 mt-1.5" data-i18n="order1.title">240支液压油缸 · 泰国起重机车队</h4>
+                    <p class="text-slate-500 text-sm mt-2 leading-relaxed" data-i18n="order1.desc">定制250bar双作用油缸，90天生产周期，21天海运至林查班港。全套材质证书及出厂检验报告随货发出。</p>
+                    <span class="inline-block mt-3 text-[11px] bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full font-semibold">已交付 ✓</span>
+                </div>
+            </div>
+            <!-- ★ 订单2 -->
+            <div class="card-lift bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 flex gap-5 reveal">
+                <div class="w-12 h-12 bg-navy-900 rounded-xl flex items-center justify-center flex-shrink-0 text-white font-bold text-sm">02</div>
+                <div>
+                    <span class="text-[11px] text-slate-400 font-semibold tracking-wide">2024.06.05 – 2024.11.20</span>
+                    <h4 class="text-lg font-bold text-navy-900 mt-1.5" data-i18n="order2.title">6艘18米铝合金巡逻艇 · 阿联酋</h4>
+                    <p class="text-slate-500 text-sm mt-2 leading-relaxed" data-i18n="order2.desc">阿联酋海岸警卫队定制6艘18m全装备巡逻艇。双350hp舷外机配置，最高航速45节。BV船级社认证船体，满足中东海域作业要求。</p>
+                    <span class="inline-block mt-3 text-[11px] bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full font-semibold">已交付 ✓</span>
+                </div>
+            </div>
+            <!-- ★ 订单3 -->
+            <div class="card-lift bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 flex gap-5 reveal">
+                <div class="w-12 h-12 bg-navy-900 rounded-xl flex items-center justify-center flex-shrink-0 text-white font-bold text-sm">03</div>
+                <div>
+                    <span class="text-[11px] text-slate-400 font-semibold tracking-wide">2025.01.18 – 2025.04.05</span>
+                    <h4 class="text-lg font-bold text-navy-900 mt-1.5" data-i18n="order3.title">500kWh储能集装箱 · 尼日利亚光伏电站</h4>
+                    <p class="text-slate-500 text-sm mt-2 leading-relaxed" data-i18n="order3.desc">集装箱式磷酸铁锂储能系统，集成HVAC温控及消防系统。支持4G远程监控。为卡杜纳地区离网光伏项目提供稳定储能支撑。</p>
+                    <span class="inline-block mt-3 text-[11px] bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full font-semibold">已交付 ✓</span>
+                </div>
+            </div>
+            <!-- ★ 订单4 -->
+            <div class="card-lift bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 flex gap-5 reveal">
+                <div class="w-12 h-12 bg-navy-900 rounded-xl flex items-center justify-center flex-shrink-0 text-white font-bold text-sm">04</div>
+                <div>
+                    <span class="text-[11px] text-slate-400 font-semibold tracking-wide">2025.02.10 – 进行中</span>
+                    <h4 class="text-lg font-bold text-navy-900 mt-1.5" data-i18n="order4.title">120支船用油缸 · 荷兰挖泥船改造</h4>
+                    <p class="text-slate-500 text-sm mt-2 leading-relaxed" data-i18n="order4.desc">为荷兰某疏浚公司挖泥船改造项目定制耐腐蚀液压油缸。陶瓷涂层活塞杆，DNV认证焊接工艺，满足北海恶劣工况使用要求。</p>
+                    <span class="inline-block mt-3 text-[11px] bg-amber-50 text-amber-700 px-3 py-1 rounded-full font-semibold">生产中</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== 公司优势 ==================== -->
+<section class="py-24 sm:py-32 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
+        <div class="text-center mb-16 sm:mb-20 reveal">
+            <p class="text-brand font-semibold text-xs tracking-[0.2em] uppercase mb-4" data-i18n="advantages.tag">为什么选择润柏</p>
+            <h2 class="text-3xl sm:text-5xl font-bold text-navy-900 tracking-tight" data-i18n="advantages.heading">建立在信任之上的合作</h2>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            <div class="bg-white rounded-2xl p-7 reveal card-lift text-center">
+                <div class="w-12 h-12 bg-navy-900 rounded-xl flex items-center justify-center mx-auto mb-5">
+                    <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                </div>
+                <h3 class="text-lg font-bold text-navy-900 mb-3" data-i18n="adv1.title">国际品质认证</h3>
+                <p class="text-slate-500 text-sm leading-relaxed" data-i18n="adv1.desc">ISO 9001:2015认证生产体系。100%出厂检验，每批次提供完整材质证书及检测报告。</p>
+            </div>
+            <div class="bg-white rounded-2xl p-7 reveal card-lift text-center">
+                <div class="w-12 h-12 bg-navy-900 rounded-xl flex items-center justify-center mx-auto mb-5">
+                    <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
+                <h3 class="text-lg font-bold text-navy-900 mb-3" data-i18n="adv2.title">工厂直供价格</h3>
+                <p class="text-slate-500 text-sm leading-relaxed" data-i18n="adv2.desc">自有CNC加工中心及焊接产线。去除中间环节，同等品质下成本较欧洲供应商低15%–25%。</p>
+            </div>
+            <div class="bg-white rounded-2xl p-7 reveal card-lift text-center">
+                <div class="w-12 h-12 bg-navy-900 rounded-xl flex items-center justify-center mx-auto mb-5">
+                    <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                </div>
+                <h3 class="text-lg font-bold text-navy-900 mb-3" data-i18n="adv3.title">全球物流网络</h3>
+                <p class="text-slate-500 text-sm leading-relaxed" data-i18n="adv3.desc">ISPM-15标准出口熏蒸包装。与Maersk、MSC、COSCO长期合作。支持FOB/CIF/DDP贸易条款。标准交期30–60天。</p>
+            </div>
+            <div class="bg-white rounded-2xl p-7 reveal card-lift text-center">
+                <div class="w-12 h-12 bg-navy-900 rounded-xl flex items-center justify-center mx-auto mb-5">
+                    <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"/></svg>
+                </div>
+                <h3 class="text-lg font-bold text-navy-900 mb-3" data-i18n="adv4.title">OEM/ODM 定制</h3>
+                <p class="text-slate-500 text-sm leading-relaxed" data-i18n="adv4.desc">10+人工程研发团队。生产前3D CAD建模与FEA有限元分析。来图来样定制，提供从设计到量产的完整服务。</p>
+            </div>
+            <div class="bg-white rounded-2xl p-7 reveal card-lift text-center">
+                <div class="w-12 h-12 bg-navy-900 rounded-xl flex items-center justify-center mx-auto mb-5">
+                    <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                </div>
+                <h3 class="text-lg font-bold text-navy-900 mb-3" data-i18n="adv5.title">24小时响应</h3>
+                <p class="text-slate-500 text-sm leading-relaxed" data-i18n="adv5.desc">英文商务经理一对一跟进。询盘24小时内回复报价。全生命周期售后技术支持与备件供应保障。</p>
+            </div>
+            <div class="bg-white rounded-2xl p-7 reveal card-lift text-center">
+                <div class="w-12 h-12 bg-navy-900 rounded-xl flex items-center justify-center mx-auto mb-5">
+                    <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+                </div>
+                <h3 class="text-lg font-bold text-navy-900 mb-3" data-i18n="adv6.title">合规与质保</h3>
+                <p class="text-slate-500 text-sm leading-relaxed" data-i18n="adv6.desc">标准2年产品质保。可提供CE、BV、CCS等国际认证。产品符合欧盟CE、美国ANSI及IMO等国际规范要求。</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== 客户合作 ==================== -->
+<section class="py-24 sm:py-32 bg-white">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
+        <div class="text-center mb-16 sm:mb-20 reveal">
+            <p class="text-brand font-semibold text-xs tracking-[0.2em] uppercase mb-4" data-i18n="clients.tag">合作伙伴</p>
+            <h2 class="text-3xl sm:text-5xl font-bold text-navy-900 tracking-tight" data-i18n="clients.heading">值得信赖的全球伙伴</h2>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-5">
+            <!-- ★ 替换为实际客户logo: <img src="1.jpg" class="w-full h-full object-contain p-4"> -->
+            <div class="h-20 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-center hover:shadow-md transition-shadow reveal"><span class="text-slate-300 font-bold text-[11px]"><img src="1.jpg" ></span></div>
+            <div class="h-20 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-center hover:shadow-md transition-shadow reveal"><span class="text-slate-300 font-bold text-[11px]"><img src="2.jpg" ></span></div>
+            <div class="h-20 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-center hover:shadow-md transition-shadow reveal"><span class="text-slate-300 font-bold text-[11px]"><img src="3.jpg" ></span></div>
+            <div class="h-20 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-center hover:shadow-md transition-shadow reveal"><span class="text-slate-300 font-bold text-[11px]"><img src="4.jpg" ></span></div>
+            <div class="h-20 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-center hover:shadow-md transition-shadow reveal"><span class="text-slate-300 font-bold text-[11px]"><img src="5.jpg" ></span></div>
+            <div class="h-20 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-center hover:shadow-md transition-shadow reveal"><span class="text-slate-300 font-bold text-[11px]"><img src="6.jpg" ></span></div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== 询盘表单 ==================== -->
+<section id="contact" class="py-24 sm:py-32 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-start">
+            <div class="reveal">
+                <p class="text-brand font-semibold text-xs tracking-[0.2em] uppercase mb-4" data-i18n="contact.tag">联系我们</p>
+                <h2 class="text-3xl sm:text-5xl font-bold text-navy-900 tracking-tight mb-6" data-i18n="contact.heading">开启合作</h2>
+                <p class="text-slate-500 text-sm leading-relaxed mb-10" data-i18n="contact.desc">告诉我们您的需求，我们将在24小时内回复定制化方案与报价。</p>
+                <div class="space-y-6">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm border border-slate-100">
+                            <svg class="w-4 h-4 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                        </div>
+                        <div>
+                            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Email</p>
+                            <!-- ★ 修改邮箱 -->
+                            <p class="text-sm text-navy-900 font-medium">3341965644@QQ.com</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-green-50 rounded-xl flex items-center justify-center flex-shrink-0 border border-green-100">
+                            <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/></svg>
+                        </div>
+                        <div>
+                            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wide">WhatsApp</p>
+                            <!-- ★ 修改 WhatsApp -->
+                            <p class="text-sm text-navy-900 font-medium">+86 130 6112 4006</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm border border-slate-100">
+                            <svg class="w-4 h-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        </div>
+                        <div>
+                            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wide">地址</p>
+                            <!-- ★ 修改地址 -->
+                            <p class="text-sm text-navy-900 font-medium">中国 · 山东 · 威海</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ★ 表单 -->
+            <div class="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm reveal">
+                <form id="inquiryForm" class="space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-500 mb-1.5" data-i18n="form.name">姓名 *</label>
+                            <input type="text" required placeholder="您的姓名" class="input-focus w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm transition-all duration-200">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-500 mb-1.5" data-i18n="form.company">公司名称</label>
+                            <input type="text" placeholder="公司名称" class="input-focus w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm transition-all duration-200">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-500 mb-1.5" data-i18n="form.email">邮箱 *</label>
+                            <input type="email" required placeholder="you@company.com" class="input-focus w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm transition-all duration-200">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-500 mb-1.5" data-i18n="form.phone">电话 / WhatsApp</label>
+                            <input type="tel" placeholder="+86 130 XXXX XXXX" class="input-focus w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm transition-all duration-200">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 mb-1.5" data-i18n="form.product">意向产品</label>
+                        <select class="input-focus w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 transition-all duration-200 appearance-none">
+                            <option value="">— 请选择 —</option>
+                            <option>液压油缸</option>
+                            <option>铝合金船舶（执法艇/钓鱼艇/工作艇）</option>
+                            <option>储能电源系统</option>
+                            <option>其他 / 多类产品</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 mb-1.5" data-i18n="form.message">需求描述 *</label>
+                        <textarea required rows="4" placeholder="请描述所需数量、技术规格、目的港、期望交期等信息…" class="input-focus w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm transition-all duration-200 resize-none"></textarea>
+                    </div>
+                    <button type="submit" id="submitBtn"
+                            class="btn-glow w-full py-3.5 bg-navy-900 hover:bg-navy-800 text-white font-semibold text-sm rounded-xl transition-all duration-300 flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-navy-900/20 active:scale-[0.98]">
+                        <span data-i18n="form.submit">提交询盘</span>
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    </button>
+                </form>
+                <div id="formMsg" class="hidden mt-4 p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-sm text-emerald-700 text-center font-medium"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== 页脚 ==================== -->
+<footer class="bg-navy-900 text-white pt-16 pb-8">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+            <div>
+                <span class="text-xl font-bold tracking-tight">RUNBAI<span class="text-brand"> Global</span></span>
+                <p class="text-slate-400 text-sm mt-4 leading-relaxed">润柏贸易有限公司 — 液压油缸 · 铝合金船舶 · 储能电源。立足山东威海，服务全球客户。</p>
+            </div>
+            <div>
+                <h4 class="text-xs font-semibold uppercase tracking-wider text-slate-300 mb-4" data-i18n="footer.nav">导航</h4>
+                <ul class="space-y-2.5 text-sm text-slate-400">
+                    <li><a href="#home" class="hover:text-white transition-colors">首页</a></li>
+                    <li><a href="#products" class="hover:text-white transition-colors">产品中心</a></li>
+                    <li><a href="#about" class="hover:text-white transition-colors">关于我们</a></li>
+                    <li><a href="#contact" class="hover:text-white transition-colors">联系我们</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-xs font-semibold uppercase tracking-wider text-slate-300 mb-4" data-i18n="footer.products">产品</h4>
+                <ul class="space-y-2.5 text-sm text-slate-400">
+                    <li><a href="#" class="hover:text-white transition-colors">液压油缸</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors">铝合金船舶</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors">储能电源系统</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-xs font-semibold uppercase tracking-wider text-slate-300 mb-4" data-i18n="footer.contact">联系方式</h4>
+                <ul class="space-y-2.5 text-sm text-slate-400">
+                    <li>3341965644@QQ.com</li>
+                    <li>+86 130 6112 4006</li>
+                    <li>中国 · 山东 · 威海</li>
+                </ul>
+            </div>
+        </div>
+        <div class="border-t border-slate-800 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+            <p>&copy; 2015–2025 润柏贸易有限公司 RUNBAI Global. All rights reserved.</p>
+            <div class="flex gap-6"><a href="#" class="hover:text-slate-300 transition-colors">隐私政策</a><a href="#" class="hover:text-slate-300 transition-colors">服务条款</a></div>
+        </div>
+    </div>
+</footer>
+
+<!-- ==================== JavaScript ==================== -->
+<script>
+(function() {
+    'use strict';
+
+    // ========== 多语言数据 ==========
+    // HTML 默认中文，i18n 存储 EN / RU 翻译；切换中文时恢复默认值
+    const zhDefaults = {};
+    document.querySelectorAll('[data-i18n]').forEach(function(el) {
+        zhDefaults[el.getAttribute('data-i18n')] = el.textContent;
+    });
+    // Hero 特殊元素
+    zhDefaults['hero.main'] = document.getElementById('heroMain') ? document.getElementById('heroMain').innerHTML : '';
+    zhDefaults['hero.sub']  = document.getElementById('heroSub')  ? document.getElementById('heroSub').textContent  : '';
+
+    const i18n = {
+        en: {
+            'nav.home':'Home','nav.products':'Products','nav.about':'About','nav.contact':'Contact',
+            'hero.desc':'Hydraulic cylinders · Aluminum vessels · Energy storage — engineered in China, delivered worldwide.','hero.cta1':'Explore Products','hero.cta2':'Request Quote',
+            'hero.main':'<span class="text-brand">Run</span> the World <span class="text-brand">Bai</span> Across the Globe',
+            'hero.sub':'RUNBAI Global — Your Industrial Partner',
+            'products.tag':'Product Lines','products.heading':'Three Pillars of Excellence','products.inquiry':'Request Quote',
+            'prod1.name':'Hydraulic Cylinders',
+            'prod1.desc':'Custom single & double-acting hydraulic cylinders. Bore 40–400mm, stroke up to 8000mm, working pressure to 350 bar. Hard chrome-plated rods (HRC 58–62). Premium international-brand seals. ISO 6020/2 & DIN 24333 mounting options.',
+            'prod2.name':'Aluminum Alloy Vessels',
+            'prod2.desc':'Aluminum vessels up to 80m. Three series: patrol enforcement, recreational fishing, and multi-purpose workboats. 5083-H116/H321 marine-grade aluminum. Deep-V hull for high-speed stability. Fully welded with BV/CCS classification. Custom cabin & propulsion packages.',
+            'prod3.name':'Energy Storage Systems',
+            'prod3.desc':'Modular LiFePO4 battery energy storage. 5kWh–1MWh+ with parallel expansion. Intelligent BMS with real-time cell monitoring and precise SOC/SOH estimation. Liquid or air cooling options. IEC 62619, UN38.3, CE certified.',
+            'stats.tag':'Track Record','stats.heading':'Delivering Since 2015','stats.years':'Years Experience','stats.countries':'Countries Served','stats.orders':'Orders Fulfilled','stats.satisfaction':'% Satisfaction',
+            'orders.tag':'Selected Projects','orders.heading':'Global Order Timeline',
+            'order1.title':'240 Hydraulic Cylinders · Thai Crane Fleet','order1.desc':'Custom 250-bar double-acting cylinders. 90-day production, 21-day sea freight to Laem Chabang. Full mill certs & inspection reports included.',
+            'order2.title':'6× 18m Aluminum Patrol Boats · UAE','order2.desc':'Six fully-outfitted 18m patrol vessels for UAE Coast Guard. Twin 350hp outboards, 45 knots top speed. BV class certified for Middle East waters.',
+            'order3.title':'500kWh BESS Container · Nigeria Solar Farm','order3.desc':'Containerized LiFePO4 system with HVAC & fire suppression. 4G remote monitoring. Supporting off-grid solar in Kaduna region.',
+            'order4.title':'120 Marine Cylinders · Dutch Dredger Retrofit','order4.desc':'Corrosion-resistant cylinders with ceramic-coated rods for Netherlands-based dredging upgrade. DNV certified welding for North Sea conditions.',
+            'advantages.tag':'Why RUNBAI','advantages.heading':'Partnership Built on Trust',
+            'adv1.title':'Certified Quality','adv1.desc':'ISO 9001:2015 certified production. 100% factory inspection. Complete mill certificates and test reports with every shipment.',
+            'adv2.title':'Factory-Direct Pricing','adv2.desc':'In-house CNC machining & welding. 15–25% cost advantage vs. European suppliers without compromising on quality.',
+            'adv3.title':'Global Logistics','adv3.desc':'ISPM-15 export packaging. Partnered with Maersk, MSC, COSCO. FOB/CIF/DDP terms. Standard lead time 30–60 days.',
+            'adv4.title':'OEM/ODM Customization','adv4.desc':'10+ engineering team. 3D CAD & FEA before production. Full service from design to mass production — send us your drawings.',
+            'adv5.title':'24-Hour Response','adv5.desc':'English-speaking account managers. Quote within 24 hours. Full lifecycle after-sales support and spare parts supply.',
+            'adv6.title':'Compliance & Warranty','adv6.desc':'Standard 2-year warranty. CE, BV, CCS certifications available. Compliant with EU CE, US ANSI, and IMO international regulations.',
+            'clients.tag':'Trusted Partners','clients.heading':'Global Clients',
+            'contact.tag':'Get In Touch','contact.heading':"Let's Talk Business",'contact.desc':'Tell us your requirements. We will respond with a tailored quote within 24 hours.',
+            'form.name':'Full Name *','form.company':'Company','form.email':'Email *','form.phone':'Phone / WhatsApp','form.product':'Product Interest','form.message':'Your Requirements *','form.submit':'Send Inquiry',
+            'footer.nav':'Navigation','footer.products':'Products','footer.contact':'Contact',
+        },
+        ru: {
+            'nav.home':'Главная','nav.products':'Продукция','nav.about':'О нас','nav.contact':'Контакты',
+            'hero.desc':'Гидроцилиндры · Алюминиевые суда · Накопители энергии — производство в Китае, поставки по всему миру.','hero.cta1':'Продукция','hero.cta2':'Запросить цену',
+            'hero.main':'<span class="text-brand">Движение</span> по миру <span class="text-brand">Бай</span> через континенты',
+            'hero.sub':'RUNBAI Global — Ваш индустриальный партнер',
+            'products.tag':'Продукция','products.heading':'Три направления','products.inquiry':'Запросить цену',
+            'prod1.name':'Гидроцилиндры',
+            'prod1.desc':'Гидроцилиндры одностороннего и двустороннего действия. Диаметр 40–400 мм, ход до 8000 мм, рабочее давление до 350 бар. Хромированные штоки (HRC 58–62). Премиальные уплотнения международных брендов.',
+            'prod2.name':'Алюминиевые суда',
+            'prod2.desc':'Алюминиевые суда до 80 м. Три серии: патрульные, рыболовные и многоцелевые рабочие катера. Морской алюминий 5083-H116/H321. Корпус Deep-V. Сертификация BV/CCS.',
+            'prod3.name':'Накопители энергии',
+            'prod3.desc':'Модульные LiFePO4 системы 5 кВт·ч – 1 МВт·ч+. Интеллектуальная BMS с мониторингом ячеек. Жидкостное или воздушное охлаждение. Сертификаты IEC 62619, UN38.3, CE.',
+            'stats.tag':'Показатели','stats.heading':'Работаем с 2015 года','stats.years':'Лет опыта','stats.countries':'Стран','stats.orders':'Выполнено заказов','stats.satisfaction':'% Довольных клиентов',
+            'orders.tag':'Проекты','orders.heading':'Международные заказы',
+            'order1.title':'240 гидроцилиндров · Таиланд','order1.desc':'Цилиндры 250 бар. Производство 90 дней, доставка 21 день до Лаем Чабанг. Полный пакет сертификатов.',
+            'order2.title':'6× 18м патрульных катеров · ОАЭ','order2.desc':'Шесть полностью оборудованных патрульных катеров для береговой охраны ОАЭ. Два 350hp, скорость 45 узлов. Сертификация BV.',
+            'order3.title':'500 кВт·ч BESS контейнер · Нигерия','order3.desc':'Контейнерная LiFePO4 система с HVAC и пожаротушением. 4G мониторинг. Для солнечной электростанции в Кадуне.',
+            'order4.title':'120 судовых цилиндров · Нидерланды','order4.desc':'Коррозионностойкие цилиндры с керамическим покрытием для модернизации земснаряда. Сертификация DNV для условий Северного моря.',
+            'advantages.tag':'Преимущества','advantages.heading':'Партнерство на доверии',
+            'adv1.title':'Сертифицированное качество','adv1.desc':'Производство ISO 9001:2015. 100% контроль. Сертификаты материалов с каждой партией.',
+            'adv2.title':'Заводские цены','adv2.desc':'Собственное производство ЧПУ и сварка. Экономия 15–25% по сравнению с европейскими аналогами.',
+            'adv3.title':'Глобальная логистика','adv3.desc':'Упаковка ISPM-15. Партнерство с Maersk, MSC, COSCO. FOB/CIF/DDP. Срок поставки 30–60 дней.',
+            'adv4.title':'OEM/ODM','adv4.desc':'10+ инженеров. 3D CAD и FEA анализ. Полный цикл от дизайна до производства — присылайте чертежи.',
+            'adv5.title':'Ответ за 24ч','adv5.desc':'Англоговорящие менеджеры. Котировка в течение 24 часов. Постпродажная поддержка и поставка запчастей.',
+            'adv6.title':'Гарантия 2 года','adv6.desc':'Стандартная гарантия 2 года. Сертификаты CE, BV, CCS. Соответствие нормам EU, US ANSI, IMO.',
+            'clients.tag':'Партнеры','clients.heading':'Глобальные клиенты',
+            'contact.tag':'Контакты','contact.heading':'Начнем сотрудничество','contact.desc':'Опишите ваши требования. Мы ответим с индивидуальным предложением в течение 24 часов.',
+            'form.name':'Имя *','form.company':'Компания','form.email':'Email *','form.phone':'Телефон / WhatsApp','form.product':'Продукт','form.message':'Ваши требования *','form.submit':'Отправить запрос',
+            'footer.nav':'Навигация','footer.products':'Продукция','footer.contact':'Контакты',
+        }
+    };
+
+    let currentLang = 'zh';
+
+    function switchLang(lang) {
+        currentLang = lang;
+        document.documentElement.lang = (lang === 'zh') ? 'zh-CN' : lang;
+        document.querySelectorAll('[data-i18n]').forEach(function(el) {
+            var key = el.getAttribute('data-i18n');
+            if (lang === 'zh') {
+                // 恢复中文默认值
+                if (zhDefaults[key] !== undefined) el.textContent = zhDefaults[key];
+            } else if (i18n[lang] && i18n[lang][key] !== undefined) {
+                el.textContent = i18n[lang][key];
+            }
+        });
+        // Hero 特殊处理
+        var heroMain = document.getElementById('heroMain');
+        var heroSub = document.getElementById('heroSub');
+        if (heroMain) {
+            if (lang === 'zh') heroMain.innerHTML = zhDefaults['hero.main'];
+            else if (i18n[lang] && i18n[lang]['hero.main']) heroMain.innerHTML = i18n[lang]['hero.main'];
+        }
+        if (heroSub) {
+            if (lang === 'zh') heroSub.textContent = zhDefaults['hero.sub'];
+            else if (i18n[lang] && i18n[lang]['hero.sub']) heroSub.textContent = i18n[lang]['hero.sub'];
+        }
+        // 按钮高亮
+        document.querySelectorAll('.lang-dot').forEach(function(btn) {
+            btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+        });
+        try { localStorage.setItem('runbai-lang', lang); } catch(e) {}
+    }
+
+    document.querySelectorAll('.lang-dot').forEach(function(btn) {
+        btn.addEventListener('click', function() { switchLang(btn.getAttribute('data-lang')); });
+    });
+
+    // 初始化
+    var saved = 'zh';
+    try { saved = localStorage.getItem('runbai-lang') || 'zh'; } catch(e) {}
+    switchLang(saved);
+
+    // ========== 移动端菜单 ==========
+    var drawer = document.getElementById('mobileDrawer');
+    var menuBtn = document.getElementById('menuBtn');
+    var isOpen = false;
+    menuBtn.addEventListener('click', function() {
+        isOpen = !isOpen;
+        drawer.classList.toggle('open', isOpen);
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+    window.closeDrawer = function() {
+        isOpen = false;
+        drawer.classList.remove('open');
+        document.body.style.overflow = '';
+    };
+
+    // ========== 滚动渐显 ==========
+    var revealObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('in-view');
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+    document.querySelectorAll('.reveal').forEach(function(el) { revealObserver.observe(el); });
+
+    // ========== 数字滚动 ==========
+    var counterObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                var el = entry.target;
+                var target = parseInt(el.getAttribute('data-target')) || 0;
+                var current = 0, steps = 50;
+                var timer = setInterval(function() {
+                    current += target / steps;
+                    if (current >= target) { current = target; clearInterval(timer); }
+                    el.textContent = Math.floor(current);
+                }, 25);
+                counterObserver.unobserve(el);
+            }
+        });
+    }, { threshold: 0.4 });
+    document.querySelectorAll('.stat-num').forEach(function(el) { counterObserver.observe(el); });
+
+    // ========== Hero 鼠标视差 ==========
+    var heroSection = document.getElementById('home');
+    if (heroSection) {
+        heroSection.addEventListener('mousemove', function(e) {
+            var x = (e.clientX / window.innerWidth - 0.5) * 20;
+            var y = (e.clientY / window.innerHeight - 0.5) * 20;
+            heroSection.style.backgroundPosition = (50 + x * 0.3) + '% ' + (30 + y * 0.3) + '%';
+        });
+    }
+
+    // ========== 卡片 3D 倾斜 ==========
+    document.querySelectorAll('[data-tilt]').forEach(function(card) {
+        card.addEventListener('mousemove', function(e) {
+            var rect = card.getBoundingClientRect();
+            var x = (e.clientX - rect.left) / rect.width - 0.5;
+            var y = (e.clientY - rect.top) / rect.height - 0.5;
+            var inner = card.querySelector('.tilt-inner');
+            if (inner) {
+                inner.style.transform = 'rotateY(' + (x * 8) + 'deg) rotateX(' + (-y * 8) + 'deg)';
+            }
+        });
+        card.addEventListener('mouseleave', function() {
+            var inner = card.querySelector('.tilt-inner');
+            if (inner) inner.style.transform = 'rotateY(0deg) rotateX(0deg)';
+        });
+    });
+
+    // ========== 表单提交 ==========
+    document.getElementById('inquiryForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        var btn = document.getElementById('submitBtn');
+        var orig = btn.innerHTML;
+        btn.innerHTML = '<svg class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg> 发送中…';
+        btn.disabled = true;
+        // ★ 替换为真实 API: fetch('/api/inquiry', {method:'POST', body: new FormData(e.target)})
+        setTimeout(function() {
+            var msgs = { zh:'感谢您的询盘！我们将在24小时内回复。', en:'Thank you! We will reply within 24 hours.', ru:'Спасибо! Мы ответим в течение 24 часов.' };
+            var msg = document.getElementById('formMsg');
+            msg.textContent = msgs[currentLang] || msgs.zh;
+            msg.classList.remove('hidden');
+            btn.innerHTML = orig;
+            btn.disabled = false;
+            e.target.reset();
+            setTimeout(function() { msg.classList.add('hidden'); }, 5000);
+        }, 1500);
+    });
+
+    console.log('RUNBAI Global — 润行天下 柏遍全球');
+    console.log('搜索 ★ 查看所有可修改位置');
+    console.log('Languages: 中文 | EN | RU');
+})();
+</script>
+
+</body>
+</html>
